@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sqwa Streak Tracker</title>
+    <style>
+        body {
+            animation: slowFlashBackground 5s infinite alternate; /* Slow flashing effect */
+            background-color: #ffcc00; /* Bright yellow background */
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #ff0066; /* Neon pink text */
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Subtle shadow effect */
+        }
+        .trophy-row {
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sqwa Streak Tracker</h1>
+    <div class="trophy-row" id="trophyRow"></div>
+    <button onclick="addTrophy()">Win! 🏆</button>
+    <button onclick="resetTrophies()">Lose 😢</button>
+    <button onclick="removeTrophy()">Oops! 🙈</button>
+
+    <script>
+        let trophyCount = getTrophyCountFromLocalStorage();
+        const trophyRow = document.getElementById('trophyRow');
+
+        function addTrophy() {
+            trophyCount++;
+            const trophyEmoji = '🏆';
+            trophyRow.textContent += trophyEmoji;
+            saveTrophyCountToLocalStorage();
+        }
+
+        function resetTrophies() {
+            trophyCount = 0;
+            trophyRow.textContent = '';
+            saveTrophyCountToLocalStorage();
+        }
+
+        function removeTrophy() {
+            if (trophyCount > 0) {
+                trophyCount--;
+                trophyRow.textContent = trophyRow.textContent.slice(0, -2);
+                saveTrophyCountToLocalStorage();
+            }
+        }
+
+        function getTrophyCountFromLocalStorage() {
+            return parseInt(localStorage.getItem('trophyCount')) || 0;
+        }
+
+        function saveTrophyCountToLocalStorage() {
+            localStorage.setItem('trophyCount', trophyCount);
+        }
+    </script>
+</body>
+</html>
